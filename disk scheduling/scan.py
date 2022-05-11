@@ -18,6 +18,7 @@ def scan(requests, size, queue=None, index=0,  position=0, movement=0, waiting_t
         position += (not forward) * (-2) + 1
         movement += 1
         added = False
+
         while index < len(requests) and requests[index].arrival <= movement:
             if isinstance(requests[index], rt_request_entry):
                 break

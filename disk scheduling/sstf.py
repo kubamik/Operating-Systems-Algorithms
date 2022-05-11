@@ -11,7 +11,6 @@ def sstf(requests, _, queue=None, index=0, position=0, movement=0, waiting_times
     forward = None
     req = None
 
-    data = []
     times = []
 
     while index != len(requests) or len(queue) > 0:
@@ -34,7 +33,6 @@ def sstf(requests, _, queue=None, index=0, position=0, movement=0, waiting_times
             forward = req.location > position
 
         while req is not None and req.location == position:
-            data.append(req.location)
             times.append(movement)
             waiting_times.append(req.waiting_time(movement))
             queue.pop(0)

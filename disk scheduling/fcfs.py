@@ -11,8 +11,6 @@ def fcfs(requests, _, queue=None, index=0, position=0, movement=0, waiting_times
     forward = None
     req = None
 
-    data = []
-
     while index != len(requests) or len(queue) > 0:
         if forward is not None:
             position += (not forward) * (-2) + 1
@@ -32,7 +30,6 @@ def fcfs(requests, _, queue=None, index=0, position=0, movement=0, waiting_times
             forward = req.location > position
 
         while req is not None and req.location == position:
-            data.append(req.location)
             waiting_times.append(req.waiting_time(movement))
             queue.pop(0)
             req = queue[0] if len(queue) > 0 else None

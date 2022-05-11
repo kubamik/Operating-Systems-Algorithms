@@ -13,13 +13,8 @@ def fd_scan(requests, size, queue, index, position, movement, waiting_times, *__
         return queue, index, position, movement, waiting_times, None, unrealized_count+1, real_time_data
     forward = None if req.location == position else req.location > position
     sorted_queue = sorted(queue)
-    if forward is None:
-        qindex = binary_search(sorted_queue, position, True)
-        rtqindex = binary_search(rt_queue, position, True)
-    else:
-        qindex = binary_search(sorted_queue, position, forward)
-        rtqindex = binary_search(rt_queue, position, forward)
-    pass
+    qindex = binary_search(sorted_queue, position, forward or forward is None)
+    rtqindex = binary_search(rt_queue, position, forward or forward is None)
 
     while len(rt_queue) > 0:
         if forward is not None:
@@ -37,13 +32,8 @@ def fd_scan(requests, size, queue, index, position, movement, waiting_times, *__
         if added:
             rt_queue.sort()
             sorted_queue = sorted(queue)
-            if forward is None:
-                qindex = binary_search(sorted_queue, position, True)
-                rtqindex = binary_search(rt_queue, position, True)
-            else:
-                qindex = binary_search(sorted_queue, position, forward)
-                rtqindex = binary_search(rt_queue, position, forward)
-            pass
+            qindex = binary_search(sorted_queue, position, forward or forward is None)
+            rtqindex = binary_search(rt_queue, position, forward or forward is None)
 
         while 0 <= rtqindex < len(rt_queue) and rt_queue[rtqindex].location == position:
             if rt_queue[rtqindex].active(movement):
@@ -55,7 +45,6 @@ def fd_scan(requests, size, queue, index, position, movement, waiting_times, *__
             rt_queue.pop(rtqindex)
             if not forward:
                 rtqindex -= 1
-                pass
 
         while 0 <= qindex < len(queue) and sorted_queue[qindex].location == position:
             waiting_times.append(sorted_queue[qindex].waiting_time(movement))
