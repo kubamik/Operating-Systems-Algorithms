@@ -1,11 +1,11 @@
 import random
 
 
-def generate(npages, ncalls, min_group_size, max_group_size, min_group_length, max_group_length, **_):
+def generate(npages, ncalls, min_group_size, max_group_size, min_group_length, max_group_length, factor=2, **_):
     calls = []
     group = []
     group_length = 0
-    group_chance = 1 / (max_group_length + min_group_length) * 3
+    group_chance = 1 / (max_group_length + min_group_length) * 2 * factor
     for _ in range(ncalls):
         if not group_length:
             if random.random() < group_chance:

@@ -27,7 +27,7 @@ simulations = [
         "max_group_length": 50,
     },
     {
-        "name": "Larger group than frames",
+        "name": "Larger local group than frames",
         "npages": 20,
         "nframes": 7,
         "ncalls": 10000,
@@ -42,12 +42,12 @@ simulations = [
         "nframes": 2,
         "ncalls": 10000,
         "min_group_size": 2,
-        "max_group_size": 12,
+        "max_group_size": 5,
         "min_group_length": 10,
         "max_group_length": 100,
     },
     {
-        "name": "Long groups",
+        "name": "Long local groups",
         "npages": 20,
         "nframes": 10,
         "ncalls": 10000,
@@ -55,6 +55,26 @@ simulations = [
         "max_group_size": 10,
         "min_group_length": 100,
         "max_group_length": 200,
+    },
+    {
+        "name": "Short local groups",
+        "npages": 20,
+        "nframes": 10,
+        "ncalls": 10000,
+        "min_group_size": 7,
+        "max_group_size": 12,
+        "min_group_length": 12,
+        "max_group_length": 20,
+    },
+    {
+        "name": "Large test",
+        "npages": 50,
+        "nframes": 10,
+        "ncalls": 100000,
+        "min_group_size": 7,
+        "max_group_size": 12,
+        "min_group_length": 500,
+        "max_group_length": 1000,
     }
 ]
 
@@ -64,13 +84,14 @@ if __name__ == '__main__':
         print(simulation['name'])
         calls = generate(**simulation)
 
-        print("-" * 12, "|", "-" * 12, "|", "-" * 12, "|", "-" * 12, "|", "-" * 12, "|", "-" * 12, "|", sep="")
-        print("{:^12}|{:^12}|{:^12}|{:^12}|{:^12}|{:^12}|".format(
+        print("|", "-" * 12, "|", "-" * 12, "|", "-" * 12, "|", "-" * 12, "|", "-" * 12, "|", "-" * 12, "|", sep="")
+        print("|{:^12}|{:^12}|{:^12}|{:^12}|{:^12}|{:^12}|".format(
             "Algorithm", *[a.__name__.upper().replace('_', '-') for a in algos]))
-        print("-" * 12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", sep="")
-        print("{:^12}|".format("Faults"), end="")
+        print("|", "-" * 12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", sep="")
+        print("|{:^12}|".format("Faults"), end="")
 
         for a in algos:
             print("{:^12}".format(a(simulation['npages'], simulation['nframes'], calls)), end='|')
 
-        print("\n", "-" * 12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", sep="", end="\n\n\n")
+        print("\n", "|",  "-" * 12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|", "-"*12, "|",
+              sep="", end="\n\n\n")
